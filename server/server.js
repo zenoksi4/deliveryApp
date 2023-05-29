@@ -10,6 +10,9 @@ app.use(express.json())
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/api/shop', require('./routes/shopsRoute'))
+
+app.use('/api/cart', require('./routes/cartsRoute'))
 
 mongoose.connect(`${process.env.MONGODB_URL}`)
     .then(() => {
