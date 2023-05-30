@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    padding: 0 20px;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    align-items: center;
+    background-image: url('./slider-bg.jpg');
+    background-attachment: fixed;
+    color: rgb(233, 231, 231);
+}

@@ -1,0 +1,8 @@
+.shopPageWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90vw;
+    margin-top: 30px;
+    
+}
