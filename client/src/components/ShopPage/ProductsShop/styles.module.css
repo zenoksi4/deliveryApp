@@ -1,7 +1,8 @@
 .productShopWrapper{
     display: flex;
     flex-wrap: wrap;
-    min-width: 75%;
+    width: 75%;
+    height: 100%;
 }
 
 .productCardContent{
@@ -10,7 +11,7 @@
     flex-wrap: wrap;
     align-content: center;
     padding: 10px;
-    width: 350px;
+    width: 345px;
     height: 280px;
     margin: 10px;
     border: 1px solid #ffffffff;
