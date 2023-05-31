@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const proxy = 'http://localhost:5000/api'
+const proxy = process.env.REACT_APP_PROXY
 
 const addToCart = (state, action) => {
     const {product, shopId} = action.payload;

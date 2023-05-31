@@ -10,9 +10,9 @@ const port = process.env.PORT || 5000;
 
 
 app.use(cors())
-app.use(bodyParser.json({limit: '1mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: "1mb", extended: true}));
-app.use(bodyParser.text({ limit: '1mb' }));
+app.use(bodyParser.json({limit: '10mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: "10mb", extended: true}));
+app.use(bodyParser.text({ limit: '10mb' }));
 
 app.use('/api/shop', require('./routes/shopsRoute'))
 

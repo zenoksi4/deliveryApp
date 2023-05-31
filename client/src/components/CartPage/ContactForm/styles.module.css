@@ -15,3 +15,14 @@
 input:invalid {
     border: red solid 3px;
   }
+.formInput{
+    margin: 2px 0;
+}
+
+.formInput input{
+    padding: 5px;
+}
+.map{
+    width: 100%;
+    height: 100%;
+}

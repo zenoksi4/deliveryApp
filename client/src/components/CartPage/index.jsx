@@ -6,6 +6,7 @@ import styles from './styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../../store/cart/cartSlice';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
+import ReCAPTCHA from "react-google-recaptcha"
 
 const initialStateForm = {
     email: '',
@@ -27,6 +28,7 @@ function CartPage() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [submitted, setSubmitted] = useState(false);
     const [stateForm, dispatchForm] = useReducer(reducer, initialStateForm);
+    const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
     const dispatch = useDispatch();
     const { cart } = useSelector((state) => state.cart);
@@ -38,7 +40,9 @@ function CartPage() {
             & phonePattern.test(stateForm.phone)
             & stateForm.name.trim().length > 0
             & stateForm.address.trim().length > 0
-            & cart.length > 0;
+            & cart.length > 0
+            & isCaptchaVerified;
+        console.log(validate, '123');
         if(validate) {
             const Order = {
                 "address": stateForm.address,
@@ -59,6 +63,14 @@ function CartPage() {
       dispatchForm({ type: 'change', field: name, value });
     };
 
+    const handleCaptchaChange = (value) => {
+        if (value) {
+          setIsCaptchaVerified(true);
+        } else {
+          setIsCaptchaVerified(false);
+        }
+      };
+
     useEffect(() => {
         if (cart.length !== 0){
             const total = cart.reduce((acc, cartProd) => acc + cartProd.price * cartProd.count, 0);
@@ -75,6 +87,7 @@ function CartPage() {
                 <ProductsCart/>
             </div>
             <div className={styles.submitInform}>
+                <ReCAPTCHA sitekey={process.env.REACT_APP_CAPTCHA_KEY} onChange={handleCaptchaChange}/>
                 <p className={styles.totalPrice}>total price: {totalPrice}$</p>
                 <Button data_tooltip_id={`tooltip-submitted`} onClick={SubmitHandler} className={styles.submit}>Submit</Button>
                 {

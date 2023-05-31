@@ -1,4 +1,5 @@
 import Input from '../../Input';
+import MapComponent from './MapComponent';
 import styles from './styles.module.css'
 import React from 'react';
 
@@ -7,15 +8,16 @@ import React from 'react';
 function ContactForm({stateForm, handleChangeForm}) {
   return (
     <div className={styles.formContent}>
-      <h2>Contact information</h2>
-      <Input name='address' value={stateForm.address} onChange={handleChangeForm} placeholder='Address'/>
+      <div className={styles.map}><MapComponent handleChangeForm={handleChangeForm}/></div>
+
       <Input 
         name='email' 
         type="email" 
         pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})"
         value={stateForm.email} 
-        onChange={handleChangeForm} 
+        onChange={(e) => handleChangeForm(e)} 
         placeholder='Email'
+        classNameWrapper={styles.formInput}
       />
       <Input 
         name='phone' 
@@ -23,9 +25,15 @@ function ContactForm({stateForm, handleChangeForm}) {
         pattern="[0-9]{10}" 
         value={stateForm.phone} 
         onChange={handleChangeForm} 
+        classNameWrapper={styles.formInput}
         placeholder='Phone like a: 0500867426'
       />
-      <Input name='name' value={stateForm.name} onChange={handleChangeForm} placeholder='Name'/>
+      <Input 
+        classNameWrapper={styles.formInput} 
+        name='name' value={stateForm.name} 
+        onChange={handleChangeForm} 
+        placeholder='Name'
+      />
 
     </div>
   );

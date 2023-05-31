@@ -4,6 +4,7 @@ const Input = ({
     type = 'text',
     name = '',
     className = '',
+    classNameWrapper = '',
     placeholder = '',
     value,
     onChange = () => null,
@@ -11,7 +12,7 @@ const Input = ({
 }) => {
 
     return (
-        <div className={ `${styles.container} ${className}`}>
+        <div className={ `${styles.container} ${classNameWrapper}`}>
             <input 
                 type={ type }
                 name={ name }

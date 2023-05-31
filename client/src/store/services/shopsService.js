@@ -1,5 +1,5 @@
 import axios from 'axios'
-const proxy = 'http://localhost:5000/api'
+const proxy = process.env.REACT_APP_PROXY
 const getShops = async () => {
     const shops = await axios.get(`${proxy}/shop`);
 
