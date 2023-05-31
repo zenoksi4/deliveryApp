@@ -6,8 +6,9 @@ const Input = ({
     name = '',
     className = '',
     placeholder = '',
+    value,
     onChange = () => null,
-    error = ''
+    pattern
 }) => {
 
     return (
@@ -15,12 +16,12 @@ const Input = ({
             <input 
                 type={ type }
                 name={ name }
+                value={value}
+                pattern={pattern}
                 placeholder={ placeholder }
                 onChange={ onChange }
                 className={`${styles.input} ${className}`}
             />
-
-            { error && <span className={ styles.error }>{ error }</span>}
         </div>
     )
 }

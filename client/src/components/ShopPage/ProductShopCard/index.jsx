@@ -8,17 +8,25 @@ import styles from './styles.module.css'
 
 
 
-function ProductsShopCard({product}) {
+function ProductsShopCard({product, selectedShop}) {
   const [showTooltip, setShowTooltip] = useState(false);
   const { cart } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch()
 
   const AddToCartHandler = (product) => {
-    if (cart.indexOf(product) !== -1) {
+    const cartProducts = cart.map(productWithCount => {
+        const { count, ...cartProduct } = productWithCount;
+        return cartProduct;
+    });
+
+    console.log(cartProducts);
+    if (cartProducts.some((cartProduct) => cartProduct._id === product._id)) {
       setShowTooltip(true);
     } else {
-      dispatch(addToCart(product));
+      dispatch(addToCart({
+        product: {...product, count: 1}, 
+        shopId: selectedShop}));
       setShowTooltip(false);
     }}
   

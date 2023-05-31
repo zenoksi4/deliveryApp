@@ -4,13 +4,15 @@ import cartService from "../services/cartService";
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        cart: []
+        cart: [],
+        shopId: ''
     },
     reducers: {
-        addToCart: cartService.addToCart
+        addToCart: cartService.addToCart,
+        changeCountProduct: cartService.changeCountProduct
     }
 }); 
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, changeCountProduct } = cartSlice.actions;
 
 export default cartSlice.reducer;

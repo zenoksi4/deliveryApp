@@ -11,3 +11,7 @@
     margin-right: 20px;
     
 }
+
+input:invalid {
+    border: red solid 3px;
+  }

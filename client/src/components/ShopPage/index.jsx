@@ -7,12 +7,17 @@ import styles from './styles.module.css'
 
 function ShopPage() {
   const { shops } = useSelector((state) => state.shops);
+  const { shopId } = useSelector((state) => state.cart);
   const [selectedShop, setSelectedShop] = useState(null);
   
   useEffect(() => {
-    shops && setSelectedShop(shops[0]._id)
+    if(shopId !== ''){
+      setSelectedShop(shopId)
+    } else {
+      shops && setSelectedShop(shops[0]._id)
+    }
 
-  }, [shops]);
+  }, [shops, shopId]);
   return (
     <div className={styles.shopPageWrapper}>
       <Shops selectedShop={selectedShop} setSelectedShop={setSelectedShop}/>

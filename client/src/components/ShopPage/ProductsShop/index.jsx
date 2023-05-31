@@ -13,7 +13,7 @@ function ProductsShop({selectedShop}) {
       {
         shops && shops.find((shop) => shop._id === selectedShop)
           ?.products.map((product) => (
-            <ProductsShopCard  product={product}/>
+            <ProductsShopCard selectedShop={selectedShop}  product={product}/>
           ))
 
       }
