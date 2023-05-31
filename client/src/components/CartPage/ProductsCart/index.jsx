@@ -10,7 +10,7 @@ function ProductsCart() {
             <div className={styles.cardDesc}>
                 <h4>Big Big Burger</h4>
                 <p>price: 4$</p>
-                <Input type='number' className={styles.countCard}/>
+                <Input type='number' placeholder='0' className={styles.countCard}/>
             </div>
         </div>
 
