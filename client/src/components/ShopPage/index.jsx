@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import ProductsShop from './ProductsShop';
 import Shops from './Shops';
 import styles from './styles.module.css'
-import { useSelector } from 'react-redux';
 
 
 function ShopPage() {

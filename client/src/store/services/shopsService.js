@@ -6,8 +6,8 @@ const getShops = async () => {
     return shops.data;
 }
 
-const shopsService = {
+const cartService = {
     getShops
 }
 
-export default shopsService;
+export default cartService;

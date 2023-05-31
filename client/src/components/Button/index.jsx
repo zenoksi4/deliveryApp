@@ -5,11 +5,16 @@ import styles from './styles.module.css'
 function Button({ 
     className,
     children,
-    onClick = () => {}
+    onClick = () => {},
+    data_tooltip_id,
   }) {
     return (
         <>
-      <button className={`${styles.button} ${className}`} onClick={onClick} >
+      <button 
+        data-tooltip-id={data_tooltip_id} 
+        className={`${styles.button} ${className}`} 
+        onClick={onClick} 
+      >
         {children}
       </button>
       </>
