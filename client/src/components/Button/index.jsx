@@ -2,10 +2,14 @@ import styles from './styles.module.css'
 
 
 
-function Button({ className, href, children}) {
+function Button({ 
+    className,
+    children,
+    onClick = () => {}
+  }) {
     return (
         <>
-      <button className={`${styles.button} ${className}`} href='shopping-cart'>
+      <button className={`${styles.button} ${className}`} onClick={onClick} >
         {children}
       </button>
       </>

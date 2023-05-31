@@ -11,7 +11,6 @@ import { useEffect } from "react";
 function App() {
 
   const dispatch = useDispatch();
-  const { shops, isLoading } = useSelector((state) => state.shops);
 
   useEffect(() => {
     dispatch(getShops())

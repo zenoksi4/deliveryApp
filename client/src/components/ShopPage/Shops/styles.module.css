@@ -14,3 +14,6 @@
     margin: 20px;
 }
 
+.active{
+    box-shadow: inset 0px -2px 1px 1px #c4c4c4;
+}

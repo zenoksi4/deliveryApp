@@ -1,25 +1,33 @@
+import { useSelector } from 'react-redux';
 import Button from '../../Button';
 import styles from './styles.module.css'
 
 
-function ProductsShop() {
-    return (
-      <div className={styles.productShopWrapper}>
-        <div className={styles.productCardContent}>
+function ProductsShop({selectedShop}) {
+  const { shops } = useSelector((state) => state.shops);
 
-            <img className={styles.cardImg} alt='product' src='https://www.resizepixel.com/Image/dkkarenjq/Preview/black_and_blue_burger_95881_16x9.jpg?v=0e4ab2da-4408-48e1-9446-a5fd923893bb'/>
-            <div className={styles.cardDesc} >
-                <h3 className={styles.cardTitle} >Big Big Burger</h3>
-                <p className={styles.cardPrice}>22$</p>
+  return (
+    <div className={styles.productShopWrapper}>
+      {
+        shops && shops.find((shop) => shop._id == selectedShop)
+          ?.products.map((product) => (
+            <div className={styles.productCardContent}>
+    
+                <img className={styles.cardImg} alt='product' src={product.img}/>
+                <div className={styles.cardDesc} >
+                    <h3 className={styles.cardTitle} >{product.title}</h3>
+                    <p className={styles.cardPrice}>{product.price}$</p>
+                </div>
+                <Button>Add to Cart</Button>
             </div>
-            <Button>Add to Cart</Button>
-        </div>
+          ))
+
+      }
 
 
 
-
-      </div>
-    );
+    </div>
+  );
   }
   
 export default ProductsShop;
