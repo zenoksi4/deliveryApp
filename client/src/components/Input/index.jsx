@@ -1,6 +1,5 @@
 import styles from './styles.module.css'
 
-
 const Input = ({
     type = 'text',
     name = '',

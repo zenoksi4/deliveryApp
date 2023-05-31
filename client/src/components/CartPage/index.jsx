@@ -4,6 +4,8 @@ import ContactForm from './ContactForm';
 import ProductsCart from './ProductsCart';
 import styles from './styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
+import { createOrder } from '../../store/cart/cartSlice';
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const initialStateForm = {
     email: '',
@@ -23,11 +25,34 @@ const initialStateForm = {
 
 function CartPage() {
     const [totalPrice, setTotalPrice] = useState(0);
+    const [submitted, setSubmitted] = useState(false);
     const [stateForm, dispatchForm] = useReducer(reducer, initialStateForm);
-    
+
     const dispatch = useDispatch();
     const { cart } = useSelector((state) => state.cart);
     
+    const SubmitHandler = () => {
+        const emailPattern = /([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})/;
+        const phonePattern = /[0-9]{10}/;
+        const validate = emailPattern.test(stateForm.email) 
+            & phonePattern.test(stateForm.phone)
+            & stateForm.name.trim().length > 0
+            & stateForm.address.trim().length > 0
+            & cart.length > 0;
+        if(validate) {
+            const Order = {
+                "address": stateForm.address,
+                "email": stateForm.email,
+                "phone": stateForm.phone,
+                "name": stateForm.name,
+                "totalPrice": totalPrice,
+                "productsCart": cart
+            }
+            dispatch(createOrder(Order));
+            setSubmitted(true)
+        
+        }
+    }
 
     const handleChangeForm = (event) => {
       const { name, value } = event.target;
@@ -51,7 +76,21 @@ function CartPage() {
             </div>
             <div className={styles.submitInform}>
                 <p className={styles.totalPrice}>total price: {totalPrice}$</p>
-                <Button className={styles.submit}>Submit</Button>
+                <Button data_tooltip_id={`tooltip-submitted`} onClick={SubmitHandler} className={styles.submit}>Submit</Button>
+                {
+                    submitted ?
+                        <ReactTooltip 
+                            id={`tooltip-submitted`} 
+                            effect="solid" 
+                            events={['click']}
+                        >Submitted</ReactTooltip>
+                    :
+                        <ReactTooltip 
+                            id={`tooltip-submitted`} 
+                            effect="solid" 
+                            events={['click']}
+                        >The order is poorly made</ReactTooltip>
+                }
             </div>
         </div>
     );

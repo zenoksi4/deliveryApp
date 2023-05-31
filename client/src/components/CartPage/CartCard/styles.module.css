@@ -25,3 +25,17 @@
 .countCard{
     text-align: center;
 }
+
+.icon{
+    width: 100%;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.icon :hover{
+    opacity: 0.8;
+}
+
+.icon :active{
+    opacity: 0.6;
+}

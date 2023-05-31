@@ -2,13 +2,17 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors')
+const bodyParser = require('body-parser');  
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
-app.use(cors())
-app.use(express.json())
 
-app.use(express.urlencoded({ extended: true }));
+
+
+app.use(cors())
+app.use(bodyParser.json({limit: '1mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: "1mb", extended: true}));
+app.use(bodyParser.text({ limit: '1mb' }));
 
 app.use('/api/shop', require('./routes/shopsRoute'))
 

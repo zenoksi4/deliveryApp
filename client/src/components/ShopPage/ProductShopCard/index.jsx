@@ -20,7 +20,6 @@ function ProductsShopCard({product, selectedShop}) {
         return cartProduct;
     });
 
-    console.log(cartProducts);
     if (cartProducts.some((cartProduct) => cartProduct._id === product._id)) {
       setShowTooltip(true);
     } else {
