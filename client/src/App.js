@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getShops } from "./store/shops/shopsSlice";
 import { useEffect } from "react";
 import Loader from "./components/Loader";
+import HistoryPage from "./components/HistoryPage";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Routes>
               <Route path={ paths.shop } element={ <ShopPage/> }/>
               <Route path={ paths.shoppingCart } element={ <CartPage/> }/>
+              <Route path={ paths.history } element={ <HistoryPage/> }/>
             </Routes>
         }
 

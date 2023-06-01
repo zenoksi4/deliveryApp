@@ -1,9 +1,9 @@
 import styles from './styles.module.css'
 
 
-function Loader() {
+function Loader({className}) {
     return (
-      <div className={styles.spinner}>
+      <div className={`${styles.spinner} ${className}`}>
         
       </div>
     );

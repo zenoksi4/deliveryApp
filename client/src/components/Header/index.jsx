@@ -13,6 +13,9 @@ function Header() {
             <Link to={`${paths.shoppingCart}`}>
                 <Button>Shopping Cart</Button>
             </Link> 
+            <Link to={`${paths.history}`}>
+                <Button>History</Button>
+            </Link> 
         </div>
     );
   }

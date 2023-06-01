@@ -18,7 +18,11 @@ const deleteProductCart = (state, action) => {
         state.shopId = ''
     }
 }
+const getOrdersByEmail = async (email) => {
+    const orders = await axios.get(`${proxy}/cart?email=${email}`);
 
+    return orders.data;
+}
 const clearCart = (state, action) => {
     state.cart.length = 0;
     state.shopId = '';
@@ -41,7 +45,8 @@ const cartService = {
     changeCountProduct,
     createOrder,
     deleteProductCart,
-    clearCart
+    clearCart,
+    getOrdersByEmail
 }
 
 export default cartService;

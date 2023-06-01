@@ -4,7 +4,15 @@ import cartService from "../services/cartService";
 
 export const createOrder = createAsyncThunk('CREATE_ORDER', async (order, thunkAPI) => {
     try {   
-        return await cartService.createOrder(order)
+        return await cartService.createOrder(order);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data)
+    }
+});
+
+export const getOrdersByEmail = createAsyncThunk('GET_ORDER', async (email, thunkAPI) => {
+    try {   
+        return await cartService.getOrdersByEmail(email);
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -18,7 +26,7 @@ const cartSlice = createSlice({
         isLoading: false,
         message: '',
         errors: null,
-        order: null
+        orders: null
     },
     reducers: {
         addToCart: cartService.addToCart,
@@ -32,13 +40,26 @@ const cartSlice = createSlice({
         });
         builder.addCase(createOrder.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.order = action.payload;
         });
         builder.addCase(createOrder.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload.message;
-            state.order = null;
+
+        });
+
+        builder.addCase(getOrdersByEmail.pending, (state) => {
+            state.isLoading = true
+        });
+        builder.addCase(getOrdersByEmail.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.orders = action.payload;
+        });
+        builder.addCase(getOrdersByEmail.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload.message;
+            state.orders = null;
         });
     }
 }); 
