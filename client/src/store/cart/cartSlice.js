@@ -23,7 +23,8 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: cartService.addToCart,
         changeCountProduct: cartService.changeCountProduct,
-        deleteProductCart: cartService.deleteProductCart
+        deleteProductCart: cartService.deleteProductCart,
+        clearCart: cartService.clearCart
     },
     extraReducers: (builder) => {
         builder.addCase(createOrder.pending, (state) => {
@@ -42,6 +43,6 @@ const cartSlice = createSlice({
     }
 }); 
 
-export const { addToCart, changeCountProduct, deleteProductCart } = cartSlice.actions;
+export const { addToCart, changeCountProduct, deleteProductCart, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

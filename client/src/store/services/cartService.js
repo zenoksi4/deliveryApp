@@ -19,6 +19,11 @@ const deleteProductCart = (state, action) => {
     }
 }
 
+const clearCart = (state, action) => {
+    state.cart.length = 0;
+    state.shopId = '';
+}
+
 const changeCountProduct = (state, action) => {
     const {_id, count} = action.payload;
     const product = state.cart.find((product) => product._id === _id);
@@ -35,7 +40,8 @@ const cartService = {
     addToCart,
     changeCountProduct,
     createOrder,
-    deleteProductCart
+    deleteProductCart,
+    clearCart
 }
 
 export default cartService;

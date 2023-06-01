@@ -4,7 +4,7 @@ import ContactForm from './ContactForm';
 import ProductsCart from './ProductsCart';
 import styles from './styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrder } from '../../store/cart/cartSlice';
+import { clearCart, createOrder } from '../../store/cart/cartSlice';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import ReCAPTCHA from "react-google-recaptcha"
 
@@ -53,6 +53,7 @@ function CartPage() {
                 "productsCart": cart
             }
             dispatch(createOrder(Order));
+            dispatch(clearCart());
             setSubmitted(true)
         
         }
