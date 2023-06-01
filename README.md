@@ -1,8 +1,14 @@
-# Getting Started 
 
+### Deploy:
+# https://deliveryapp.pages.dev/
+# It may take 30 seconds to first load because the server is deployed on free hosting
 
+## Back-end deploy:
+### https://deliveryapp-9r5t.onrender.com/api/shop
+### https://deliveryapp-9r5t.onrender.com/api/cart
+
+# Getting Started local
 ## Terminal:
-
 
 ### `cd server` and add to .env 'MONGODB_URL'
 |           |
