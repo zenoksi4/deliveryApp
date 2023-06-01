@@ -42,7 +42,7 @@ function CartPage() {
             & stateForm.address.trim().length > 0
             & cart.length > 0
             & isCaptchaVerified;
-        console.log(validate, '123');
+
         if(validate) {
             const Order = {
                 "address": stateForm.address,

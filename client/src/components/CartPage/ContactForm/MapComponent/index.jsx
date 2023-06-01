@@ -16,21 +16,23 @@ import styles from "./styles.module.css";
 import { Polyline } from "@react-google-maps/api";
 import { useSelector } from "react-redux";
 
-function MapComponent({ handleChangeForm }) {
-
+function MapComponent({ stateForm, handleChangeForm }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_KEY}`,
     libraries: ["places"],
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map handleChangeForm={handleChangeForm} />;
+  return <Map stateForm={stateForm} handleChangeForm={handleChangeForm} />;
 }
 
-function Map({ handleChangeForm }) {
+function Map({ stateForm, handleChangeForm }) {
   const { shops } = useSelector((state) => state.shops);
   const { shopId } = useSelector((state) => state.cart);
-  const [shopLocation, setShopLocation] = useState({lat:49.840107078158766, lng:24.023565201245322})
+  const [shopLocation, setShopLocation] = useState({
+    lat: 49.840107078158766,
+    lng: 24.023565201245322,
+  });
 
   const [selected, setSelected] = useState(null);
   const [pathCoordinates, setPathCoordinates] = useState([]);
@@ -41,10 +43,8 @@ function Map({ handleChangeForm }) {
       calculatePathCoordinates(selected, shopLocation);
     }
     if (shopId) {
-
       setShopLocation(shops.find((shop) => shop._id === shopId).location);
     }
-
   }, [selected, shopLocation, shopId, shops]);
 
   const calculatePathCoordinates = async (origin, destination) => {
@@ -72,11 +72,31 @@ function Map({ handleChangeForm }) {
     );
   };
 
+  async function getAddressFromCoordinates(lat, lng) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_KEY}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.results.length > 0) {
+      const address = data.results[0].formatted_address;
+
+      const setAddress = {
+        target: {
+          name: "address",
+          value: address,
+        },
+      };
+
+      handleChangeForm(setAddress);
+    }
+  }
+
   const handleMapClick = (event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
+    getAddressFromCoordinates(lat, lng);
 
-    console.log(event);
     setSelected({ lat, lng });
   };
 
@@ -90,13 +110,13 @@ function Map({ handleChangeForm }) {
       >
         {selected && <Marker position={selected} />}
         {shopLocation && <Marker position={shopLocation} />}
-        {pathCoordinates.length > 0 && (
+        {pathCoordinates.length > 0 && selected && (
           <Polyline
             path={pathCoordinates}
             options={{ strokeColor: "#0000FF" }}
           />
         )}
-        {duration && (
+        {duration && selected && (
           <div
             style={{
               position: "absolute",
@@ -116,13 +136,14 @@ function Map({ handleChangeForm }) {
         <PlacesAutocomplete
           handleChangeForm={handleChangeForm}
           setSelected={setSelected}
+          stateForm={stateForm}
         />
       </div>
     </>
   );
 }
 
-const PlacesAutocomplete = ({ handleChangeForm, setSelected }) => {
+const PlacesAutocomplete = ({ stateForm, handleChangeForm, setSelected }) => {
   const {
     ready,
     value,
@@ -131,16 +152,33 @@ const PlacesAutocomplete = ({ handleChangeForm, setSelected }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  useEffect(() => {
+    clearSuggestions();
+  }, [value, setValue, stateForm]);
+
+  const handleChangeInput = (e) => {
+    clearSuggestions();
+    setValue(stateForm.address || e.target.value);
+    setSelected(null);
+    const setAddress = {
+      target: {
+        name: "address",
+        value: e.target.value,
+      },
+    };
+    handleChangeForm(setAddress);
+  };
+
   const handleSelect = async (address) => {
     setValue(address, false);
     clearSuggestions();
-    const event = {
+    const setAddress = {
       target: {
         name: "address",
         value: address,
       },
     };
-    handleChangeForm(event);
+    handleChangeForm(setAddress);
     const results = await getGeocode({ address });
     const { lat, lng } = await getLatLng(results[0]);
     setSelected({ lat, lng });
@@ -149,10 +187,8 @@ const PlacesAutocomplete = ({ handleChangeForm, setSelected }) => {
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
+        value={stateForm.address || value}
+        onChange={handleChangeInput}
         disabled={!ready}
         className={styles.input}
         placeholder="Address"

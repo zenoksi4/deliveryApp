@@ -8,7 +8,7 @@ import React from 'react';
 function ContactForm({stateForm, handleChangeForm}) {
   return (
     <div className={styles.formContent}>
-      <div className={styles.map}><MapComponent handleChangeForm={handleChangeForm}/></div>
+      <div className={styles.map}><MapComponent stateForm={stateForm} handleChangeForm={handleChangeForm}/></div>
 
       <Input 
         name='email' 

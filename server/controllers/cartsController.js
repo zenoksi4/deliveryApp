@@ -16,7 +16,8 @@ const createCart = async (req, res) => {
 
 const getCart = async (req, res) => {
     try {
-        const cart = await Cart.find();
+        const searchEmail = req.query.email
+        const cart = await Cart.find({email: searchEmail});
 
         res.status(200).json(cart);
     } catch (error) {
