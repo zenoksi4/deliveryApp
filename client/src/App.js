@@ -7,10 +7,12 @@ import CartPage from "./components/CartPage";
 import { useDispatch, useSelector } from "react-redux";
 import { getShops } from "./store/shops/shopsSlice";
 import { useEffect } from "react";
+import Loader from "./components/Loader";
 
 function App() {
 
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.shops);
 
   useEffect(() => {
     dispatch(getShops())
@@ -21,11 +23,16 @@ function App() {
     <BrowserRouter>
       <ContentWrapper>
         <Header/>
+        {
+          isLoading ?
+            <Loader/>
+          :
+            <Routes>
+              <Route path={ paths.shop } element={ <ShopPage/> }/>
+              <Route path={ paths.shoppingCart } element={ <CartPage/> }/>
+            </Routes>
+        }
 
-        <Routes>
-          <Route path={ paths.shop } element={ <ShopPage/> }/>
-          <Route path={ paths.shoppingCart } element={ <CartPage/> }/>
-        </Routes>
 
       </ContentWrapper>
     </BrowserRouter>
